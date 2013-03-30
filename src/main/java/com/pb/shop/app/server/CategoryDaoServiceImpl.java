@@ -31,7 +31,7 @@ public class CategoryDaoServiceImpl extends JdbcDaoSupport implements CategoryDa
     @Override
     public Category getCategoryById(String catId) {
         List<Category> list = getJdbcTemplate().query(GET_CATEGORY_BY_ID,
-                new Object[]{catId},
+                new Object[]{new Integer(catId)},
                 new CategoryWrapper());
         return list.get(0);
     }
@@ -57,8 +57,8 @@ public class CategoryDaoServiceImpl extends JdbcDaoSupport implements CategoryDa
     public void updateCategory(Category category) {
         getJdbcTemplate().update(UPDATE_CATEGORY,
                 new Object[]{category.getCatID(),
-                    category.getParentCatID(),
-                    category.getCatName()}
+                    category.getCatName(),
+                    category.getParentCatID()}
         );
     }
 
