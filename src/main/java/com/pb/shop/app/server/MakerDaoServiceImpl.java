@@ -68,16 +68,16 @@ public class MakerDaoServiceImpl extends JdbcDaoSupport implements MakerDaoServi
                 );
     }
 
-    private static final class MakerMapper implements RowMapper<Maker>{
+private static final class MakerMapper implements RowMapper<Maker>{
 
-        @Override
-        public Maker mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Maker maker = new Maker();
-            maker.setMakID(rs.getInt("MakID"));
-            maker.setMakName(rs.getString("MakName"));
-            maker.setMakDescr(rs.getString("MakDescr"));
-            return maker;
-        }
-        
+    @Override
+    public Maker mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Maker maker = new Maker();
+        maker.setMakID(rs.getInt("MakID"));
+        maker.setMakName(rs.getString("MakName"));
+        maker.setMakDescr(rs.getString("MakDescr"));
+        return maker;
     }
+
+}
 }
