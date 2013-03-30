@@ -4,6 +4,8 @@
  */
 package com.pb.shop.app.server;
 
+import com.pb.shop.model.Category;
+import com.pb.shop.model.CategoryList;
 import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
@@ -34,18 +36,16 @@ public class ShopController {
     @Autowired
     @Qualifier("makerImpl")
     MakerDaoService makerService;
-    
     @Autowired
     @Qualifier("productImpl")
     ProductDaoService productService;
-    
     @Autowired
     @Qualifier("categoryImpl")
     CategoryDaoService categoryService;
 
     public ShopController() {
     }
-    
+
 //    Тестовый мапинг с использованием ViewResolver
 //    @RequestMapping(value = "/makers/")
 //    public ModelAndView getAllMakers() {
@@ -54,12 +54,11 @@ public class ShopController {
 //                new ModelAndView("shopXmlView", "data", new MakersList(makers));
 //        return mav;
 //    }
-    
     @RequestMapping(value = "/t", method = RequestMethod.GET)
-    public ResponseEntity<Void> test(){
+    public ResponseEntity<Void> test() {
         return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
     }
-    
+
     @RequestMapping(value = "/makers/", method = RequestMethod.GET)
     @ResponseBody
     public MakersList getAllMakers() {
@@ -67,7 +66,7 @@ public class ShopController {
         MakersList list = new MakersList(makers);
         return list;
     }
-    
+
     @RequestMapping(value = "/maker/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Maker getMakerById(@PathVariable String id) {
@@ -88,14 +87,47 @@ public class ShopController {
     public void addMaker(@RequestBody Maker m) {
         makerService.addMaker(m);
     }
-    
+
     @RequestMapping(value = "/admin/update/maker", method = RequestMethod.POST)
     @ResponseBody
     public void updateMaker(@RequestBody Maker m) {
         makerService.updateMaker(m);
     }
-    
-    
+
+    @RequestMapping(value = "/categoryes/", method = RequestMethod.GET)
+    @ResponseBody
+    public CategoryList getALLCategoryes() {
+        List<Category> category = categoryService.getAllCategories();
+        CategoryList list = new CategoryList(category);
+        return list;
+    }
+
+    @RequestMapping(value = "/category/by/id/{id}")
+    @ResponseBody
+    public Category getCategoryById(@PathVariable String id) {
+        Category category = categoryService.getCategoryById(id);
+        return category;
+    }
+
+    @RequestMapping(value = "/category/by/name/{name}")
+    public CategoryList getCategoryByName(@PathVariable String name) {
+        List<Category> categoryes = categoryService.getCategoriesByName(name);
+        CategoryList list = new CategoryList(categoryes);
+        return list;
+    }
+
+    @RequestMapping(value = "/add/category", method = RequestMethod.POST)
+    @ResponseBody
+    public void addCategory(@RequestBody Category c) {
+        categoryService.addCategory(c);
+    }
+
+    @RequestMapping(value = "/update/category", method = RequestMethod.POST)
+    @ResponseBody
+    public void updateCategory(@RequestBody Category c) {
+        categoryService.updateCategory(c);
+    }
+
     //Тест на отлавливание исключений
     @ExceptionHandler(Exception.class)
     @ResponseBody
@@ -104,9 +136,9 @@ public class ShopController {
         p.setProdDescription(exception.getMessage());
         return p;
     }
-    
+
     @RequestMapping(value = "/test")
-    public ModelAndView getTestEx() throws Exception{
+    public ModelAndView getTestEx() throws Exception {
         throw new Exception("Hello Exception!!");
     }
     //--------------------------------------------
