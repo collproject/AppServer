@@ -110,6 +110,7 @@ public class ShopController {
     }
 
     @RequestMapping(value = "/category/by/name/{name}")
+    @ResponseBody
     public CategoryList getCategoryByName(@PathVariable String name) {
         List<Category> categoryes = categoryService.getCategoriesByName(name);
         CategoryList list = new CategoryList(categoryes);
