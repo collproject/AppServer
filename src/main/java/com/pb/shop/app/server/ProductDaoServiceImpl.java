@@ -89,7 +89,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
             product.setCatID(rs.getInt("CatID"));
             product.setMakID(rs.getInt("MakID"));
             product.setProdName(rs.getString("ProdName"));
-            product.setProdDescription(rs.getString("MakDescription"));
+            product.setProdDescription(rs.getString("ProdDescription"));
 
             if (rs.getString("ProdExist").equals("y")) {
                 product.setProdExist(true);

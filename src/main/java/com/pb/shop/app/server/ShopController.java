@@ -7,6 +7,7 @@ package com.pb.shop.app.server;
 import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
+import com.pb.shop.model.ProductsList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -110,4 +111,41 @@ public class ShopController {
         throw new Exception("Hello Exception!!");
     }
     //--------------------------------------------
+    
+    @RequestMapping(value = "/products/", method = RequestMethod.GET)
+    @ResponseBody
+    public ProductsList getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        ProductsList list = new ProductsList(products);
+        return list;
+    }
+    
+    @RequestMapping(value = "/product/by/id/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Product getProductById(@PathVariable String id) {
+        return productService.getProductById(id);
+    }
+    
+    @RequestMapping(value = "/product/by/name/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public ProductsList getProductByName(@PathVariable String name) {
+        List<Product> products = productService.getProductsByName(name);
+        ProductsList list = new ProductsList(products);
+        return list;
+    }
+    
+    @RequestMapping(value = "/add/product", method = RequestMethod.POST)
+    @ResponseBody
+    public void addProduct(@RequestBody Product p) {
+        productService.addProduct(p);
+    }
+    
+    @RequestMapping(value = "/update/product", method = RequestMethod.POST)
+    @ResponseBody
+    public void updateProduct(@RequestBody Product p) {
+        productService.updateProduct(p);
+    }
+    
+    
+    
 }
