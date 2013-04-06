@@ -10,10 +10,22 @@ import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +55,8 @@ public class ShopController {
     @Autowired
     @Qualifier("categoryImpl")
     CategoryDaoService categoryService;
+    @Autowired
+    ImageService imageService;
 
     public ShopController() {
     }
@@ -144,7 +158,7 @@ public class ShopController {
         throw new Exception("Hello Exception!!");
     }
     //--------------------------------------------
-    
+
     @RequestMapping(value = "/products/", method = RequestMethod.GET)
     @ResponseBody
     public ProductsList getAllProducts() {
@@ -152,13 +166,13 @@ public class ShopController {
         ProductsList list = new ProductsList(products);
         return list;
     }
-    
+
     @RequestMapping(value = "/product/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Product getProductById(@PathVariable String id) {
         return productService.getProductById(id);
     }
-    
+
     @RequestMapping(value = "/product/by/name/{name}", method = RequestMethod.GET)
     @ResponseBody
     public ProductsList getProductByName(@PathVariable String name) {
@@ -166,19 +180,33 @@ public class ShopController {
         ProductsList list = new ProductsList(products);
         return list;
     }
-    
+
     @RequestMapping(value = "/add/product", method = RequestMethod.POST)
     @ResponseBody
     public void addProduct(@RequestBody Product p) {
         productService.addProduct(p);
     }
-    
+
     @RequestMapping(value = "/update/product", method = RequestMethod.POST)
     @ResponseBody
     public void updateProduct(@RequestBody Product p) {
         productService.updateProduct(p);
     }
+
+    @RequestMapping("/image/{id}.jpg")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable String id) throws IOException {
+
+        InputStream in = imageService.getImageStreamById(id);
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+
+        return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+    }
     
-    
+    @RequestMapping(value = "/add/image/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public void addProductImage(@PathVariable String id, @RequestBody String imageDataString){
+        imageService.saveImageById(id, imageDataString);
+    }
     
 }
