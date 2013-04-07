@@ -25,7 +25,7 @@
         </property>
     </bean>
     
-    <!-- Писоединяем dataSource к DAO-классам -->
+    <!-- Присоединяем dataSource к DAO-классам -->
     
     <bean id="makerImpl" class="com.pb.shop.app.server.MakerDaoServiceImpl">
         <property name ="dataSource" ref="dataSource"/>
