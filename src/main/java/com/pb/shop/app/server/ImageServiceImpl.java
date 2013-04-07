@@ -19,13 +19,23 @@ import org.springframework.stereotype.Service;
  *
  * @author Madness
  */
-@Service
 public class ImageServiceImpl implements ImageService {
+    
+    private String imgDir;
 
+    public String getImgDir() {
+        return imgDir;
+    }
+
+    public void setImgDir(String imgDir) {
+        this.imgDir = imgDir;
+    }
+    
+            
     @Override
     public InputStream getImageStreamById(String id) {
 
-        File f = new File("d:/images/" + id + ".jpg");
+        File f = new File(imgDir + "/" + id + ".jpg");
         InputStream in = null;
         try {
             in = new FileInputStream(f);
@@ -41,7 +51,7 @@ public class ImageServiceImpl implements ImageService {
         byte[] imageByteArray = Base64.decodeBase64(imageDataString);
         try {
             FileOutputStream imageOutFile = new FileOutputStream(
-                    "d:/images/" + id + ".jpg");
+                    imgDir + "/" + id + ".jpg");
 
             imageOutFile.write(imageByteArray);
             imageOutFile.close();

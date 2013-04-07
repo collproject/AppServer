@@ -39,5 +39,11 @@
         <property name ="dataSource" ref="dataSource"/>
     </bean>
     
+    <bean id="imgImpl" class="com.pb.shop.app.server.ImageServiceImpl">
+        <property name="imgDir">
+            <value>${img.dir}</value>
+        </property>
+    </bean>
+    
     <context:property-placeholder location="classpath:/jdbc.properties"/>
 </beans>

@@ -56,6 +56,7 @@ public class ShopController {
     @Qualifier("categoryImpl")
     CategoryDaoService categoryService;
     @Autowired
+    @Qualifier("imgImpl")
     ImageService imageService;
 
     public ShopController() {
