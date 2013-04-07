@@ -10,7 +10,7 @@ import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
-import com.pb.shop.model.UserException;
+import com.pb.shop.model.UserBadMessage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -184,8 +184,8 @@ public class ShopController {
     
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public UserException handleIOException(Exception exception) {
-        UserException ue = new UserException();
+    public UserBadMessage handleIOException(Exception exception) {
+        UserBadMessage ue = new UserBadMessage();
     
         if (exception instanceof DuplicateKeyException) {
             ue.setMessage("Запись с таким ид уже существует");
@@ -200,7 +200,7 @@ public class ShopController {
         if (exception instanceof DataIntegrityViolationException) {
             ue.setMessage("Невозможно обновить/удалить запись");
         } 
-        else {
+        else { //Тут не очень удачная проверка, будет на нее постоянно поподать
             ue.setMessage(exception.getClass().getName());
         }
         return ue;
