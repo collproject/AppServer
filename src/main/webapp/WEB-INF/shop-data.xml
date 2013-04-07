@@ -25,6 +25,10 @@
         </property>
     </bean>
     
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
     <!-- Писоединяем dataSource к DAO-классам -->
     
     <bean id="makerImpl" class="com.pb.shop.app.server.MakerDaoServiceImpl">

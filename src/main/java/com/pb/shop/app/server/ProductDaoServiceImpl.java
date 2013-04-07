@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -25,13 +27,16 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     private final String UPDATE_PRODUCT = "UPDATE products SET makid = ?, catid = ?, "
             + "prodname = ?, prodprice = ?, proddescription = ?, prodimg = ?, "
             + "prodexist = ? WHERE prodid = ?";
+    private final String DELETE_BY_ID = "DELETE FROM Products WHERE ProdID = ?";
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<Product> getAllProducts() {
         return getJdbcTemplate().query(GET_ALL_PRODUCTS, new ProductMapper());
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product getProductById(String prodId) {
         return getJdbcTemplate().query(
                 GET_PRODUCT_BY_ID,
@@ -41,6 +46,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<Product> getProductsByName(String name) {
         return getJdbcTemplate().query(
                 GET_PRODUCT_BY_NAME,
@@ -49,6 +55,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addProduct(Product product) {
         getJdbcTemplate().update(
                 ADD_PRODUCT,
@@ -65,6 +72,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateProduct(Product product) {
         getJdbcTemplate().update(
                 UPDATE_PRODUCT,
@@ -78,6 +86,14 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
             product.getProdExist(),
             product.getProdID()
         });
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteProduct(String prodId) {
+        getJdbcTemplate().update(DELETE_BY_ID, 
+                new Object[]{new Integer(prodId)}
+        );
     }
 
     private static final class ProductMapper implements RowMapper<Product> {

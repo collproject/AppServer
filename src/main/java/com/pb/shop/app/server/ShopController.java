@@ -10,11 +10,20 @@ import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
+import com.pb.shop.model.UserException;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.sql.SQLException;
 import java.util.List;
+import org.apache.commons.dbcp.SQLNestedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jca.cci.CannotGetCciConnectionException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,14 +56,6 @@ public class ShopController {
     public ShopController() {
     }
 
-//    Тестовый мапинг с использованием ViewResolver
-//    @RequestMapping(value = "/makers/")
-//    public ModelAndView getAllMakers() {
-//        List<Maker> makers = makerService.getAllMakers();
-//        ModelAndView mav =
-//                new ModelAndView("shopXmlView", "data", new MakersList(makers));
-//        return mav;
-//    }
     @RequestMapping(value = "/t", method = RequestMethod.GET)
     public ResponseEntity<Void> test() {
         return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
@@ -94,6 +95,12 @@ public class ShopController {
     public void updateMaker(@RequestBody Maker m) {
         makerService.updateMaker(m);
     }
+    
+    @RequestMapping(value = "/delete/maker/by/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void deleteMaker(@PathVariable String id){
+        makerService.deletMaker(id);
+    }
 
     @RequestMapping(value = "/categoryes/", method = RequestMethod.GET)
     @ResponseBody
@@ -130,20 +137,11 @@ public class ShopController {
         categoryService.updateCategory(c);
     }
 
-    //Тест на отлавливание исключений
-    @ExceptionHandler(Exception.class)
+    @RequestMapping(value = "/delete/category/by/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Product handleIOException(Exception exception) {
-        Product p = new Product(134);
-        p.setProdDescription(exception.getMessage());
-        return p;
+    public void deleteCategory(@PathVariable String id){
+        categoryService.deleteCategory(id);
     }
-
-    @RequestMapping(value = "/test")
-    public ModelAndView getTestEx() throws Exception {
-        throw new Exception("Hello Exception!!");
-    }
-    //--------------------------------------------
     
     @RequestMapping(value = "/products/", method = RequestMethod.GET)
     @ResponseBody
@@ -152,13 +150,13 @@ public class ShopController {
         ProductsList list = new ProductsList(products);
         return list;
     }
-    
+
     @RequestMapping(value = "/product/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Product getProductById(@PathVariable String id) {
         return productService.getProductById(id);
     }
-    
+
     @RequestMapping(value = "/product/by/name/{name}", method = RequestMethod.GET)
     @ResponseBody
     public ProductsList getProductByName(@PathVariable String name) {
@@ -166,19 +164,47 @@ public class ShopController {
         ProductsList list = new ProductsList(products);
         return list;
     }
-    
+
     @RequestMapping(value = "/add/product", method = RequestMethod.POST)
     @ResponseBody
     public void addProduct(@RequestBody Product p) {
         productService.addProduct(p);
     }
-    
+
     @RequestMapping(value = "/update/product", method = RequestMethod.POST)
     @ResponseBody
     public void updateProduct(@RequestBody Product p) {
         productService.updateProduct(p);
     }
     
-    
+    @RequestMapping(value = "/delete/product/by/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void deleteProduct(@PathVariable String ig){
+        productService.deleteProduct(ig);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public UserException handleIOException(Exception exception) {
+        UserException ue = new UserException();
+        
+        if (exception instanceof DuplicateKeyException) {
+            ue.setMessage("Запись с таким ид уже существует");
+        }
+        if (exception instanceof CannotGetJdbcConnectionException) {
+            ue.setMessage("Соединение с БД отсутствует");
+        }
+        if (exception instanceof IndexOutOfBoundsException) {
+            ue.setMessage("Невозможно получить данные, запись с таким ид отсутствует");
+        }
+
+        if (exception instanceof DataIntegrityViolationException) {
+            ue.setMessage("Невозможно обновить/удалить запись");
+        } 
+        else {
+            ue.setMessage(exception.getClass().getName());
+        }
+        return ue;
+    }
     
 }

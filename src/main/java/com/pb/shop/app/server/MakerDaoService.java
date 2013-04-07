@@ -16,4 +16,5 @@ public interface MakerDaoService {
     List<Maker> getMakersByName(String name);
     void addMaker(Maker maker);
     void updateMaker(Maker maker);
+    void deletMaker(String mkId);
 }
