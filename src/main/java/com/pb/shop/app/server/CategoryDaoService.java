@@ -18,5 +18,5 @@ public interface CategoryDaoService {
     List<Category> getCategoriesByName(String name);
     void addCategory(Category category);
     void updateCategory(Category category);
-    void deleteCategory(String catId);
+    
 }
