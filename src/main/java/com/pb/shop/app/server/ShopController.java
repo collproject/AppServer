@@ -10,22 +10,34 @@ import com.pb.shop.model.Maker;
 import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
-import com.pb.shop.model.UserException;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -43,10 +55,21 @@ public class ShopController {
     @Autowired
     @Qualifier("categoryImpl")
     CategoryDaoService categoryService;
+    @Autowired
+    @Qualifier("imgImpl")
+    ImageService imageService;
 
     public ShopController() {
     }
 
+//    Тестовый мапинг с использованием ViewResolver
+//    @RequestMapping(value = "/makers/")
+//    public ModelAndView getAllMakers() {
+//        List<Maker> makers = makerService.getAllMakers();
+//        ModelAndView mav =
+//                new ModelAndView("shopXmlView", "data", new MakersList(makers));
+//        return mav;
+//    }
     @RequestMapping(value = "/t", method = RequestMethod.GET)
     public ResponseEntity<Void> test() {
         return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
@@ -86,12 +109,6 @@ public class ShopController {
     public void updateMaker(@RequestBody Maker m) {
         makerService.updateMaker(m);
     }
-    
-    @RequestMapping(value = "/delete/maker/by/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public void deleteMaker(@PathVariable String id){
-        makerService.deletMaker(id);
-    }
 
     @RequestMapping(value = "/categoryes/", method = RequestMethod.GET)
     @ResponseBody
@@ -128,12 +145,21 @@ public class ShopController {
         categoryService.updateCategory(c);
     }
 
-    @RequestMapping(value = "/delete/category/by/{id}", method = RequestMethod.GET)
+    //Тест на отлавливание исключений
+    @ExceptionHandler(Exception.class)
     @ResponseBody
-    public void deleteCategory(@PathVariable String id){
-        categoryService.deleteCategory(id);
+    public Product handleIOException(Exception exception) {
+        Product p = new Product(134);
+        p.setProdDescription(exception.getMessage());
+        return p;
     }
-    
+
+    @RequestMapping(value = "/test")
+    public ModelAndView getTestEx() throws Exception {
+        throw new Exception("Hello Exception!!");
+    }
+    //--------------------------------------------
+
     @RequestMapping(value = "/products/", method = RequestMethod.GET)
     @ResponseBody
     public ProductsList getAllProducts() {
@@ -167,35 +193,21 @@ public class ShopController {
     public void updateProduct(@RequestBody Product p) {
         productService.updateProduct(p);
     }
-    
-    @RequestMapping(value = "/delete/product/by/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public void deleteProduct(@PathVariable String ig){
-        productService.deleteProduct(ig);
+
+    @RequestMapping("/image/{id}.jpg")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable String id) throws IOException {
+
+        InputStream in = imageService.getImageStreamById(id);
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+
+        return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
     }
-
-    @ExceptionHandler(Exception.class)
+    
+    @RequestMapping(value = "/add/image/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public UserException handleIOException(Exception exception) {
-        UserException ue = new UserException();
-        
-        if (exception instanceof DuplicateKeyException) {
-            ue.setMessage("Запись с таким ид уже существует");
-        }
-        if (exception instanceof CannotGetJdbcConnectionException) {
-            ue.setMessage("Соединение с БД отсутствует");
-        }
-        if (exception instanceof IndexOutOfBoundsException) {
-            ue.setMessage("Невозможно получить данные, запись с таким ид отсутствует");
-        }
-
-        if (exception instanceof DataIntegrityViolationException) {
-            ue.setMessage("Невозможно обновить/удалить запись");
-        } 
-        else {
-            ue.setMessage(exception.getClass().getName());
-        }
-        return ue;
+    public void addProductImage(@PathVariable String id, @RequestBody String imageDataString){
+        imageService.saveImageById(id, imageDataString);
     }
     
 }
