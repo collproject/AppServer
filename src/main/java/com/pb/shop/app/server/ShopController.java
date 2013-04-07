@@ -11,6 +11,7 @@ import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
 import com.pb.shop.model.UserException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
