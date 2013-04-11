@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pb.shop.app.server;
+package com.pb.shop.app.server.dao.impl;
 
+import com.pb.shop.app.server.dao.service.MakerDaoService;
 import com.pb.shop.model.Maker;
 import java.sql.ResultSet;
 import java.sql.SQLException;

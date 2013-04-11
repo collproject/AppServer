@@ -4,6 +4,10 @@
  */
 package com.pb.shop.app.server;
 
+import com.pb.shop.app.server.dao.service.CategoryDaoService;
+import com.pb.shop.app.server.dao.service.ProductDaoService;
+import com.pb.shop.app.server.dao.service.MakerDaoService;
+import com.pb.shop.app.server.dao.service.ImageService;
 import com.pb.shop.model.Category;
 import com.pb.shop.model.CategoryList;
 import com.pb.shop.model.Maker;
@@ -55,10 +59,6 @@ public class ShopController {
     public ShopController() {
     }
 
-    @RequestMapping(value = "/t", method = RequestMethod.GET)
-    public ResponseEntity<Void> test() {
-        return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-    }
 
     @RequestMapping(value = "/makers/", method = RequestMethod.GET)
     @ResponseBody

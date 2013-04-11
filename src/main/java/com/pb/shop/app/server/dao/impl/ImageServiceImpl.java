@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pb.shop.app.server;
+package com.pb.shop.app.server.dao.impl;
 
+import com.pb.shop.app.server.dao.service.ImageService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +14,6 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.stereotype.Service;
 
 /**
  *

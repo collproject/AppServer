@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pb.shop.app.server;
+package com.pb.shop.app.server.dao.service;
 
 import com.pb.shop.model.Category;
 import java.util.List;

@@ -23,7 +23,7 @@
             </bean> 
             
             <bean id="stringHttpMessageConverter" 
-              class="org.springframework.http.converter.StringHttpMessageConverter">
+                  class="org.springframework.http.converter.StringHttpMessageConverter">
             </bean>
         
         </mvc:message-converters>
@@ -33,18 +33,20 @@
   
     <context:component-scan base-package="com.pb.shop.app.server"/>
     
-    <!-- Пока не ипользуется, будет нужно при использовании страниц JSP
-        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
-    -->
     <bean id="xmlMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.pb.shop.model"/>
     </bean>
+    
+    <!-- Пока не ипользуется, будет нужно при использовании страниц JSP
+        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+    -->
             
-    <bean id="shopXmlView"
-          class="org.springframework.web.servlet.view.xml.MarshallingView">
-        
-        <property name="modelKey" value="data"/>
-        <property name="marshaller" ref="xmlMarshaller"/>
-    </bean>
+    <!--   
+   <bean id="shopXmlView"
+      class="org.springframework.web.servlet.view.xml.MarshallingView">
+    <property name="modelKey" value="data"/>
+    <property name="marshaller" ref="xmlMarshaller"/>
+    -->
+</bean>
 
 </beans>
