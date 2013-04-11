@@ -32,6 +32,10 @@
     <context:annotation-config/>
   
     <context:component-scan base-package="com.pb.shop.app.server"/>
+    <context:component-scan base-package="com.pb.shop.app.server.business.impl"/>
+    <context:component-scan base-package="com.pb.shop.app.server.business.service"/>
+    <context:component-scan base-package="com.pb.shop.app.server.dao.impl"/>
+    <context:component-scan base-package="com.pb.shop.app.server.dao.service"/>
     
     <bean id="xmlMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.pb.shop.model"/>
@@ -46,7 +50,7 @@
       class="org.springframework.web.servlet.view.xml.MarshallingView">
     <property name="modelKey" value="data"/>
     <property name="marshaller" ref="xmlMarshaller"/>
-    -->
+   
 </bean>
-
+-->
 </beans>
