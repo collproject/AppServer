@@ -40,7 +40,7 @@
     <bean id="xmlMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.pb.shop.model"/>
     </bean>
-    
+        
     <!-- Пока не ипользуется, будет нужно при использовании страниц JSP
         <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
     -->
