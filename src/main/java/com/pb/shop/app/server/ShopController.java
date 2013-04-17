@@ -20,6 +20,7 @@ import com.pb.shop.model.MakersList;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
 import com.pb.shop.model.UserBadMessage;
+import com.pb.shop.model.UserGoodMessage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -87,20 +88,20 @@ public class ShopController {
 
     @RequestMapping(value = "/add/maker", method = RequestMethod.POST)
     @ResponseBody
-    public void addMaker(@RequestBody Maker m) throws GeneralException {
-        makerBusinessService.addMaker(m);
+    public UserGoodMessage addMaker(@RequestBody Maker m) throws GeneralException {
+        return makerBusinessService.addMaker(m);
     }
 
     @RequestMapping(value = "/update/maker", method = RequestMethod.POST)
     @ResponseBody
-    public void updateMaker(@RequestBody Maker m) throws GeneralException {
-        makerBusinessService.updateMaker(m);
+    public UserGoodMessage updateMaker(@RequestBody Maker m) throws GeneralException {
+        return makerBusinessService.updateMaker(m);
     }
 
-    @RequestMapping(value = "/delete/maker/by/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/maker/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public void deleteMaker(@PathVariable String id) throws GeneralException{
-        makerBusinessService.deletMaker(id);
+    public UserGoodMessage deleteMaker(@PathVariable String id) throws GeneralException{
+        return makerBusinessService.deletMaker(id);
     }
 
     @RequestMapping(value = "/categoryes/", method = RequestMethod.GET)
