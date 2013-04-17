@@ -40,6 +40,8 @@ public class CategoryDaoServiceImpl extends JdbcDaoSupport implements CategoryDa
         List<Category> list = getJdbcTemplate().query(GET_CATEGORY_BY_ID,
                 new Object[]{new Integer(catId)},
                 new CategoryWrapper());
+        if(list.isEmpty())
+            return null;
         return list.get(0);
     }
 

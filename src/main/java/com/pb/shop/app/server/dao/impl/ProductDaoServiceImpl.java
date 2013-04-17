@@ -39,11 +39,15 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Product getProductById(String prodId) {
-        return getJdbcTemplate().query(
+
+        List<Product> list = getJdbcTemplate().query(
                 GET_PRODUCT_BY_ID,
                 new Object[]{Integer.parseInt(prodId)},
-                new ProductMapper()).get(0);
-
+                new ProductMapper());
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
     @Override
@@ -56,20 +60,27 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Product> getProducts(String catId, String mkId, String name, String fromPrice, String toPrice) {
+        String GET_PRODUCTS = makeQuery(catId, mkId, name, fromPrice, toPrice);
+        return getJdbcTemplate().query(GET_PRODUCTS, new ProductMapper());
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addProduct(Product product) {
         getJdbcTemplate().update(
                 ADD_PRODUCT,
                 new Object[]{
-            product.getProdID(),
-            product.getCatID(),
-            product.getMakID(),
-            product.getProdName(),
-            product.getProdPrice(),
-            product.getProdDescription(),
-            product.getProdImg(),
-            product.getProdExist()
-        });
+                    product.getProdID(),
+                    product.getCatID(),
+                    product.getMakID(),
+                    product.getProdName(),
+                    product.getProdPrice(),
+                    product.getProdDescription(),
+                    product.getProdImg(),
+                    product.getProdExist()
+                });
     }
 
     @Override
@@ -78,23 +89,22 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
         getJdbcTemplate().update(
                 UPDATE_PRODUCT,
                 new Object[]{
-            product.getCatID(),
-            product.getMakID(),
-            product.getProdName(),
-            product.getProdPrice(),
-            product.getProdDescription(),
-            product.getProdImg(),
-            product.getProdExist(),
-            product.getProdID()
-        });
+                    product.getCatID(),
+                    product.getMakID(),
+                    product.getProdName(),
+                    product.getProdPrice(),
+                    product.getProdDescription(),
+                    product.getProdImg(),
+                    product.getProdExist(),
+                    product.getProdID()
+                });
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteProduct(String prodId) {
-        getJdbcTemplate().update(DELETE_BY_ID, 
-                new Object[]{new Integer(prodId)}
-        );
+        getJdbcTemplate().update(DELETE_BY_ID,
+                new Object[]{new Integer(prodId)});
     }
 
     private static final class ProductMapper implements RowMapper<Product> {
@@ -107,16 +117,35 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
             product.setMakID(rs.getInt("MakID"));
             product.setProdName(rs.getString("ProdName"));
             product.setProdDescription(rs.getString("ProdDescription"));
-
             if (rs.getString("ProdExist").equals("y")) {
                 product.setProdExist(true);
             } else {
                 product.setProdExist(false);
             }
-
             product.setProdImg(rs.getString("ProdImg"));
             product.setProdPrice(rs.getBigDecimal("ProdPrice"));
             return product;
         }
+    }
+
+    private String makeQuery(String katId, String mkId, String name, String fromPrice, String toPrice) {
+        StringBuilder query = new StringBuilder("SELECT * FROM Products p WHERE 1 = 1");
+        if (katId != null) {
+            query.append(" AND p.CatID = ").append(katId);
+        }
+        if (mkId != null) {
+            query.append(" AND p.MakID = ").append(mkId);
+        }
+        if (name != null) {
+            query.append(" AND p.ProdName LIKE '%").append(name).append("%'");
+        }
+        if (fromPrice != null) {
+            query.append(" AND p.ProdPrice > ").append(fromPrice);
+        }
+        if (toPrice != null) {
+            query.append(" AND p.ProdPrice < ").append(toPrice);
+        }
+
+        return query.toString();
     }
 }
