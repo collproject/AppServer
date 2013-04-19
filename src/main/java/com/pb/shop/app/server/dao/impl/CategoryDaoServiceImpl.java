@@ -69,9 +69,9 @@ public class CategoryDaoServiceImpl extends JdbcDaoSupport implements CategoryDa
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateCategory(Category category) {
         getJdbcTemplate().update(UPDATE_CATEGORY,
-                new Object[]{category.getCatID(),
+                new Object[]{category.getParentCatID(),
                     category.getCatName(),
-                    category.getParentCatID()}
+                    category.getCatID()}
         );
     }
 

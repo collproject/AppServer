@@ -104,9 +104,9 @@ public class ShopController {
         return makerBusinessService.deletMaker(id);
     }
 
-    @RequestMapping(value = "/categoryes/", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories/", method = RequestMethod.GET)
     @ResponseBody
-    public CategoryList getALLCategoryes() throws GeneralException {
+    public CategoryList getALLCategories() throws GeneralException {
         List<Category> category = categoryBusinessService.getAllCategories();
         CategoryList list = new CategoryList(category);
         return list;
@@ -129,20 +129,20 @@ public class ShopController {
 
     @RequestMapping(value = "/add/category", method = RequestMethod.POST)
     @ResponseBody
-    public void addCategory(@RequestBody Category c) throws GeneralException {
-        categoryBusinessService.addCategory(c);
+    public UserGoodMessage addCategory(@RequestBody Category c) throws GeneralException {
+        return categoryBusinessService.addCategory(c);
     }
 
     @RequestMapping(value = "/update/category", method = RequestMethod.POST)
     @ResponseBody
-    public void updateCategory(@RequestBody Category c) throws GeneralException {
-        categoryBusinessService.updateCategory(c);
+    public UserGoodMessage updateCategory(@RequestBody Category c) throws GeneralException {
+        return categoryBusinessService.updateCategory(c);
     }
 
-    @RequestMapping(value = "/delete/category/by/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/category/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public void deleteCategory(@PathVariable String id) throws GeneralException{
-        categoryBusinessService.deleteCategory(id);
+    public UserGoodMessage deleteCategory(@PathVariable String id) throws GeneralException{
+        return categoryBusinessService.deleteCategory(id);
     }
 
     @RequestMapping(value = "/products/", method = RequestMethod.GET)
