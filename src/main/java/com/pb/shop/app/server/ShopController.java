@@ -24,7 +24,9 @@ import com.pb.shop.model.UserGoodMessage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,6 +60,8 @@ public class ShopController {
     MakerBusinessService makerBusinessService;
     @Autowired
     ProductBusinessService productBusinessService;
+    
+    private static final Logger logger = Logger.getLogger(ShopController.class);
 
     public ShopController() {
     }
@@ -189,20 +193,20 @@ public class ShopController {
 
     @RequestMapping(value = "/add/product", method = RequestMethod.POST)
     @ResponseBody
-    public void addProduct(@RequestBody Product p) throws GeneralException {
-        productBusinessService.addProduct(p);
+    public UserGoodMessage addProduct(@RequestBody Product p) throws GeneralException {
+        return productBusinessService.addProduct(p);
     }
 
     @RequestMapping(value = "/update/product", method = RequestMethod.POST)
     @ResponseBody
-    public void updateProduct(@RequestBody Product p) throws GeneralException {
-        productBusinessService.updateProduct(p);
+    public UserGoodMessage updateProduct(@RequestBody Product p) throws GeneralException {
+        return productBusinessService.updateProduct(p);
     }
 
     @RequestMapping(value = "/delete/product/by/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public void deleteProduct(@PathVariable String ig) throws GeneralException{
-        productBusinessService.deleteProduct(ig);
+    public UserGoodMessage deleteProduct(@PathVariable String ig) throws GeneralException{
+        return productBusinessService.deleteProduct(ig);
     }
     
     @ExceptionHandler(GeneralException.class)
@@ -210,6 +214,7 @@ public class ShopController {
     public UserBadMessage handleIOException(GeneralException exception) {
         UserBadMessage ue = new UserBadMessage();
         ue.setMessage(exception.getMessage());
+        logger.error(ue.getMessage());
         return ue;
     }
     
