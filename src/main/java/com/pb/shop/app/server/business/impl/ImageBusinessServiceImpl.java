@@ -45,5 +45,14 @@ public class ImageBusinessServiceImpl implements ImageBusinessService{
             throw new GeneralException(e.getMessage());
         }
     }
+
+    @Override
+    public UserGoodMessage delImageById(String id) throws GeneralException {
+        if(!imageService.delImageById(id)){
+            throw new GeneralException("Изображение не может быть удалено!");
+        }else{
+            return new UserGoodMessage("Изображение успешно удалено.");
+        }
+    }
     
 }

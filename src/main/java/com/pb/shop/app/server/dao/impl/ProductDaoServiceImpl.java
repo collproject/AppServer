@@ -23,7 +23,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     private final String GET_ALL_PRODUCTS = "SELECT * FROM products";
     private final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE prodid = ?";
     private final String GET_PRODUCT_BY_NAME = "SELECT * FROM products WHERE prodname like ?";
-    private final String ADD_PRODUCT = "INSERT INTO products (prodid, makid, catid,"
+    private final String ADD_PRODUCT = "INSERT INTO products (prodid, catid, makid,"
             + " prodname, prodprice, proddescription, prodimg, prodexist) VALUES(?,?,?,?,?,?,?,?)";
     private final String UPDATE_PRODUCT = "UPDATE products SET makid = ?, catid = ?, "
             + "prodname = ?, prodprice = ?, proddescription = ?, prodimg = ?, "
@@ -69,6 +69,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addProduct(Product product) {
+        String exist = (product.getProdExist()) ? "y" : "n";
         getJdbcTemplate().update(
                 ADD_PRODUCT,
                 new Object[]{
@@ -79,23 +80,24 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
                     product.getProdPrice(),
                     product.getProdDescription(),
                     product.getProdImg(),
-                    product.getProdExist()
+                    exist
                 });
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateProduct(Product product) {
+        String exist = (product.getProdExist()) ? "y" : "n";
         getJdbcTemplate().update(
                 UPDATE_PRODUCT,
                 new Object[]{
-                    product.getCatID(),
                     product.getMakID(),
+                    product.getCatID(),
                     product.getProdName(),
                     product.getProdPrice(),
                     product.getProdDescription(),
                     product.getProdImg(),
-                    product.getProdExist(),
+                    exist,
                     product.getProdID()
                 });
     }
@@ -140,10 +142,10 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
             query.append(" AND p.ProdName LIKE '%").append(name).append("%'");
         }
         if (fromPrice != null) {
-            query.append(" AND p.ProdPrice > ").append(fromPrice);
+            query.append(" AND p.ProdPrice >= ").append(fromPrice);
         }
         if (toPrice != null) {
-            query.append(" AND p.ProdPrice < ").append(toPrice);
+            query.append(" AND p.ProdPrice <= ").append(toPrice);
         }
 
         return query.toString();

@@ -74,7 +74,7 @@ public class ProductBusinessServiceImpl implements ProductBusinessService {
                     Integer.parseInt(catId);
                 }
             } catch (Exception e) {
-                throw new GeneralException("ИН \"" + catId + "\" не коректен.");
+                throw new GeneralException("ИН категории \"" + catId + "\" не коректен.");
             }
             
             try {
@@ -83,7 +83,7 @@ public class ProductBusinessServiceImpl implements ProductBusinessService {
                 }
                 
             } catch (Exception e) {
-                throw new GeneralException("ИН \"" + mkId + "\" не коректен!!!.");
+                throw new GeneralException("ИН производителя \"" + mkId + "\" не коректен!!!.");
             }
             
 //            if (name == null) {
@@ -98,7 +98,7 @@ public class ProductBusinessServiceImpl implements ProductBusinessService {
                     Double.parseDouble(toPrice);
                 }
                 if (fromPrice != null && toPrice != null) {
-                    if (Double.parseDouble(fromPrice) < Double.parseDouble(toPrice)) {
+                    if (Double.parseDouble(fromPrice) > Double.parseDouble(toPrice)) {
                         throw new GeneralException("Диапазон цены введен не корректно.");
                     }
                 }

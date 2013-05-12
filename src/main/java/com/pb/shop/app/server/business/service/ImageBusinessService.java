@@ -16,5 +16,6 @@ public interface ImageBusinessService {
     
     InputStream getImageStreamById(String id) throws GeneralException;
     UserGoodMessage saveImageById(String id, String imageDataString) throws GeneralException;
+    UserGoodMessage delImageById(String id) throws GeneralException;
     
 }

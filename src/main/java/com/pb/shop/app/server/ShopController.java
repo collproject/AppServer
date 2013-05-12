@@ -188,7 +188,6 @@ public class ShopController {
         List<Product> products = productBusinessService.getProducts(catId, mkId, name, fromPrice, toPrice);
         ProductsList list = new ProductsList(products);
         return list;
-        
     }
 
     @RequestMapping(value = "/add/product", method = RequestMethod.POST)
@@ -203,10 +202,10 @@ public class ShopController {
         return productBusinessService.updateProduct(p);
     }
 
-    @RequestMapping(value = "/delete/product/by/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/product/by/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public UserGoodMessage deleteProduct(@PathVariable String ig) throws GeneralException{
-        return productBusinessService.deleteProduct(ig);
+    public UserGoodMessage deleteProduct(@PathVariable String id) throws GeneralException{
+        return productBusinessService.deleteProduct(id);
     }
     
     @ExceptionHandler(GeneralException.class)
@@ -224,13 +223,20 @@ public class ShopController {
         InputStream in = imageBusinessService.getImageStreamById(id);
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
-
-        return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+        ResponseEntity re = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+        in.close();
+        return re;
     }
     
     @RequestMapping(value = "/add/image/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public void addProductImage(@PathVariable String id, @RequestBody String imageDataString) throws GeneralException{
-        imageBusinessService.saveImageById(id, imageDataString);
+    public UserGoodMessage addProductImage(@PathVariable String id, @RequestBody String imageDataString) throws GeneralException{
+        return imageBusinessService.saveImageById(id, imageDataString);
+    }
+    
+    @RequestMapping(value = "/delete/image/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public UserGoodMessage delProductImage(@PathVariable String id) throws GeneralException{
+        return imageBusinessService.delImageById(id);
     }
 }

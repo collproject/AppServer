@@ -14,5 +14,5 @@ public interface ImageService {
 
     InputStream getImageStreamById(String id);
     void saveImageById(String id, String imageDataString);
-    
+    boolean delImageById(String id);
 }

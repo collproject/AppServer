@@ -36,6 +36,11 @@ public class ImageServiceImpl implements ImageService {
     public InputStream getImageStreamById(String id) {
 
         File f = new File(imgDir + "/" + id + ".jpg");
+        
+        if(!f.isFile()){
+            f = new File(imgDir + "/no_image.jpg");
+        }
+        
         InputStream in = null;
         try {
             in = new FileInputStream(f);
@@ -58,6 +63,16 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException ex) {
             Logger.getLogger(ImageServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    @Override
+    public boolean delImageById(String id) {
+        File f = new File(imgDir + "/" + id + ".jpg");
+        
+        if(f.isFile()){
+            return f.delete();
+        }
+        
+        return false;
     }
 }
