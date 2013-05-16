@@ -50,7 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Madness
  */
 @Controller
-//@RequestMapping(value="/admin")
+@RequestMapping(value="/admin")
 public class ShopController {
     
     @Autowired

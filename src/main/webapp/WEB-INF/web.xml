@@ -12,8 +12,7 @@
 
     <servlet-mapping>
         <servlet-name>shop</servlet-name>
-        <url-pattern>/admin/*</url-pattern>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
         
     <listener> 
