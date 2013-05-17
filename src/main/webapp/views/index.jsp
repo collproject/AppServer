@@ -14,9 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Makers List</title>
-        <style type="text/css">
-            <%@include file="../css/style.css" %>
-        </style>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
     </head>
     <body>
         <h1>Makers</h1>
@@ -39,7 +37,7 @@
                     <c:forEach items="${products}" var="prod">
                         <tr>
                             <td>
-                                <img src="http://${pageContext.request.serverName}:${pageContext.request.serverPort}/shop-app-server/admin/image/${prod.prodImg}"
+                                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
                                      width="60" height="60">
                             </td>
                             <td> 
