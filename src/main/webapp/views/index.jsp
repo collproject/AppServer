@@ -14,6 +14,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Makers List</title>
+        <style type="text/css">
+            <%@include file="../css/style.css" %>
+        </style>
     </head>
     <body>
         <h1>Makers</h1>
@@ -28,7 +31,7 @@
                 </tbody>
             </table>
         </c:if>
-        
+        <jsp:include page="tableJSP.jsp" />
         <h1>Products</h1>
         <c:if test="${not empty products}">
             <table>
@@ -47,6 +50,6 @@
                 </tbody>
             </table>
         </c:if>
-        
+
     </body>
 </html>
