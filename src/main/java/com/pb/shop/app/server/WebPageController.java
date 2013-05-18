@@ -9,6 +9,7 @@ import com.pb.shop.app.server.business.service.ImageBusinessService;
 import com.pb.shop.app.server.business.service.MakerBusinessService;
 import com.pb.shop.app.server.business.service.ProductBusinessService;
 import com.pb.shop.exception.GeneralException;
+import com.pb.shop.model.Category;
 import com.pb.shop.model.Maker;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.UserBadMessage;
@@ -49,8 +50,10 @@ public class WebPageController {
         logger.info("Ingex page");
         List<Maker> makers = makerBusinessService.getAllMakers();
         List<Product> products = productBusinessService.getAllProducts();
+        List<Category> categories = categoryBusinessService.getAllCategories();
         model.addAttribute("makers", makers);
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
         return "index";
     }
 

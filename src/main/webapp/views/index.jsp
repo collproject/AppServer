@@ -51,40 +51,25 @@
             <div id="templatemo_wrapper">
 
                 <div id="templatemo_header">
-                    <div id="site_title"><h1><a href="#">Online Store</a></h1></div>
-                    <div id="header_right">
-                        <p>
-                            <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="#">Log In</a></p>
-                        <p>
-                            Shopping Cart: <strong>3 items</strong> ( <a href="shoppingcart.html">Show Cart</a> )
-                        </p>
-                    </div>
+                    <div id="site_title"><h1><a href="#">Онлайн магазин</a></h1></div>
                     <div class="cleaner"></div>
                 </div> <!-- END of templatemo_header -->
 
                 <div id="templatemo_menubar">
                     <div id="top_nav" class="ddsmoothmenu">
                         <ul>
-                            <li><a href="index.html" class="selected">Home</a></li>
-                            <li><a href="products.html">Products</a>
+                            <li><a href="index.html" class="selected">Главная</a></li>
+                            <li><a href="#">Производители</a>
                                 <ul>
-                                    <li><a href="http://www.templatemo.com/page/1">Sub menu 1</a></li>
-                                    <li><a href="http://www.templatemo.com/page/2">Sub menu 2</a></li>
-                                    <li><a href="http://www.templatemo.com/page/3">Sub menu 3</a></li>
-                                    <li><a href="http://www.templatemo.com/page/4">Sub menu 4</a></li>
-                                    <li><a href="http://www.templatemo.com/page/5">Sub menu 5</a></li>
+                                    <c:if test="${not empty makers}">
+                                        <c:forEach items="${makers}" var="mak">
+                                            <li><a href="#">${mak.makName}</a></li>
+                                            </c:forEach>
+                                        </c:if>                                            
                                 </ul>
                             </li>
-                            <li><a href="about.html">About</a>
-                                <ul>
-                                    <li><a href="http://www.templatemo.com/page/1">Sub menu 1</a></li>
-                                    <li><a href="http://www.templatemo.com/page/2">Sub menu 2</a></li>
-                                    <li><a href="http://www.templatemo.com/page/3">Sub menu 3</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="faqs.html">FAQs</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#">О нас</a></li>
+                            <li><a href="#">Контакты</a></li>
                         </ul>
                         <br style="clear: left" />
                     </div> <!-- end of ddsmoothmenu -->
@@ -99,44 +84,15 @@
                 <div id="templatemo_main">
                     <div id="sidebar" class="float_l">
                         <div class="sidebar_box"><span class="bottom"></span>
-                            <h3>Categories</h3>   
+                            <h3>Категории</h3>   
                             <div class="content"> 
                                 <ul class="sidebar_list">
-                                    <c:if test="${not empty makers}">
-                                        <c:forEach items="${makers}" var="mak">
-                                           <li><a href="#">${mak.makName}</a></li>
-                                        </c:forEach>
-                                    </c:if>
+                                    <c:if test="${not empty categories}">
+                                        <c:forEach items="${categories}" var="cat">
+                                            <li><a href="#">${cat.catName}</a></li>
+                                            </c:forEach>
+                                        </c:if>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="sidebar_box"><span class="bottom"></span>
-                            <h3>Bestsellers </h3>   
-                            <div class="content"> 
-                                <div class="bs_box">
-                                    <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                                    <h4><a href="#">Donec nunc nisl</a></h4>
-                                    <p class="price">$10</p>
-                                    <div class="cleaner"></div>
-                                </div>
-                                <div class="bs_box">
-                                    <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                                    <h4><a href="#">Lorem ipsum dolor sit</a></h4>
-                                    <p class="price">$12</p>
-                                    <div class="cleaner"></div>
-                                </div>
-                                <div class="bs_box">
-                                    <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                                    <h4><a href="#">Phasellus ut dui</a></h4>
-                                    <p class="price">$20</p>
-                                    <div class="cleaner"></div>
-                                </div>
-                                <div class="bs_box">
-                                    <a href="#"><img src="images/templatemo_image_01.jpg" alt="image" /></a>
-                                    <h4><a href="#">Vestibulum ante</a></h4>
-                                    <p class="price">$8</p>
-                                    <div class="cleaner"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,10 +155,8 @@
                 </div> <!-- END of templatemo_main -->
 
                 <div id="templatemo_footer">
-                    <p><a href="#">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a href="#">FAQs</a> | <a href="#">Checkout</a> | <a href="#">Contact Us</a>
+                    <p><a href="#">Главная</a> | <a href="#">О нас</a> | <a href="#">Контакты</a>
                     </p>
-
-                    Copyright © 2072 <a href="#">Your Company Name</a> | Designed by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
                 </div> <!-- END of templatemo_footer -->
 
             </div> <!-- END of templatemo_wrapper -->
@@ -229,37 +183,37 @@
     </head>
     <body>
         <h1>Makers</h1>
-        <c:if test="${not empty makers}">
-            <table>
-                <tbody>
-                    <c:forEach items="${makers}" var="maker">
-                        <tr>
-                            <td>${maker.makName}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-        <jsp:include page="tableJSP.jsp" />
-        <h1>Products</h1>
-        <c:if test="${not empty products}">
-            <table>
-                <tbody>
-                    <c:forEach items="${products}" var="prod">
-                        <tr>
-                            <td>
-                                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
-                                     width="60" height="60">
-                            </td>
-                            <td> 
-                                ${prod.prodName}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
+<c:if test="${not empty makers}">
+    <table>
+        <tbody>
+    <c:forEach items="${makers}" var="maker">
+        <tr>
+            <td>${maker.makName}</td>
+        </tr>
+    </c:forEach>
+</tbody>
+</table>
+</c:if>
+<jsp:include page="tableJSP.jsp" />
+<h1>Products</h1>
+<c:if test="${not empty products}">
+    <table>
+        <tbody>
+    <c:forEach items="${products}" var="prod">
+        <tr>
+            <td>
+                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
+                     width="60" height="60">
+            </td>
+            <td> 
+        ${prod.prodName}
+    </td>
+</tr>
+    </c:forEach>
+</tbody>
+</table>
+</c:if>
 
-    </body>
+</body>
 </html>
 -->
