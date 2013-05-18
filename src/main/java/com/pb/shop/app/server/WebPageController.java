@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -46,10 +47,12 @@ public class WebPageController {
     }
 
     @RequestMapping(value = "/index.html")
-    public String indexPage(Model model) throws GeneralException {
+    public String indexPage(@RequestParam(value = "catId",  required = false) String catId,@RequestParam(value = "mkId", required = false)  String mkId,
+            @RequestParam(value = "name", required = false) String name,@RequestParam(value = "fromPrice", required = false) String fromPrice,
+            @RequestParam(value = "toPrice", required = false) String toPrice, Model model) throws GeneralException {
         logger.info("Ingex page");
         List<Maker> makers = makerBusinessService.getAllMakers();
-        List<Product> products = productBusinessService.getAllProducts();
+        List<Product> products = productBusinessService.getProducts(catId, mkId, name, fromPrice, toPrice);
         List<Category> categories = categoryBusinessService.getAllCategories();
         model.addAttribute("makers", makers);
         model.addAttribute("products", products);

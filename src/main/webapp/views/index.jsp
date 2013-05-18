@@ -63,7 +63,7 @@
                                 <ul>
                                     <c:if test="${not empty makers}">
                                         <c:forEach items="${makers}" var="mak">
-                                            <li><a href="#">${mak.makName}</a></li>
+                                            <li><a href="<c:url value="index.html?mkId=${mak.makID}"/>">${mak.makName}</a></li>
                                             </c:forEach>
                                         </c:if>                                            
                                 </ul>
@@ -89,7 +89,7 @@
                                 <ul class="sidebar_list">
                                     <c:if test="${not empty categories}">
                                         <c:forEach items="${categories}" var="cat">
-                                            <li><a href="#">${cat.catName}</a></li>
+                                            <li><a href="<c:url value="index.html?catId=${cat.catID}"/>">${cat.catName}</a></li>
                                             </c:forEach>
                                         </c:if>
                                 </ul>
@@ -98,40 +98,46 @@
                     </div>
                     <div id="content" class="float_r">
                         <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>                        
-                        <h1>New Products</h1>
+                        <h1>Продукты</h1>
                         <c:if test="${not empty products}">
+
+                            <c:set var="count" value="0" scope="page"/>
+
                             <c:forEach items="${products}" var="product">
-                                <div class="product_box">
-                                    <h3>${product.prodName}</h3>
-                                    <img src= "<c:url value="/admin/image/${product.prodImg}"/>" />
-                                    <p>${product.prodDescription}</p>
-                                    <c:if test="${product.prodExist}" >
-                                        <p class="product_exist"> Есть на складе </p> 
-                                    </c:if>
-                                    <c:if test="${not product.prodExist}" >
-                                        <p class="product_exist"> Нет на складе </p> 
-                                    </c:if>
-                                    <p class="product_price">${product.prodPrice} грн</p>                           
-                                </div>
+                                <c:set var="count" value="${count + 1}"/>
+
+                                <c:if test="${count % 3 != 0}" >          
+                                    <div class="product_box">
+                                        <h3>${product.prodName}</h3>
+                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        <c:if test="${product.prodExist}" >
+                                            <p class="product_exist"> Есть на складе </p> 
+                                        </c:if>
+                                        <c:if test="${not product.prodExist}" >
+                                            <p class="product_exist"> Нет на складе </p> 
+                                        </c:if>
+                                        <p class="product_price">${product.prodPrice} грн</p>                           
+                                    </div>
+                                </c:if>
+
+                                <c:if test="${count % 3 == 0}" >          
+                                    <div class="product_box no_margin_right">
+                                        <h3>${product.prodName}</h3>
+                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        <c:if test="${product.prodExist}" >
+                                            <p class="product_exist"> Есть на складе </p> 
+                                        </c:if>
+                                        <c:if test="${not product.prodExist}" >
+                                            <p class="product_exist"> Нет на складе </p> 
+                                        </c:if>
+                                        <p class="product_price">${product.prodPrice} грн</p>                           
+                                    </div>
+                                    <div class="cleaner"></div>
+                                </c:if>
+                                
+
                             </c:forEach>
                         </c:if>     
-                        
-                        <div class="product_box">
-                            <h3>Titel</h3>
-                            <a href="productdetail.html"><img src="images/product/02.jpg" alt="Shoes 2" /></a>
-                            <p>Sed congue, erat id congue vehicula. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.</p>
-                            <p class="product_price">$ 80</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>        	    	
-                        <div class="product_box no_margin_right">
-                            <h3>Nulla luctus urna</h3>
-                            <a href="productdetail.html"><img src="images/product/06.jpg" alt="Shoes 6" /></a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <p class="product_price">$ 160</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>        	
                     </div> 
                     <div class="cleaner"></div>
                 </div> <!-- END of templatemo_main -->
@@ -146,56 +152,3 @@
 
     </body>
 </html>
-
-
-
-
-
-
-
-
-<!--
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title>Makers List</title>
-            <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
-    </head>
-    <body>
-        <h1>Makers</h1>
-<c:if test="${not empty makers}">
-    <table>
-        <tbody>
-    <c:forEach items="${makers}" var="maker">
-        <tr>
-            <td>${maker.makName}</td>
-        </tr>
-    </c:forEach>
-</tbody>
-</table>
-</c:if>
-<jsp:include page="tableJSP.jsp" />
-<h1>Products</h1>
-<c:if test="${not empty products}">
-    <table>
-        <tbody>
-    <c:forEach items="${products}" var="prod">
-        <tr>
-            <td>
-                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
-                     width="60" height="60">
-            </td>
-            <td> 
-        ${prod.prodName}
-    </td>
-</tr>
-    </c:forEach>
-</tbody>
-</table>
-</c:if>
-
-</body>
-</html>
--->
