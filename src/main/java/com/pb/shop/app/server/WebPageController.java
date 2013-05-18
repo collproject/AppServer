@@ -13,7 +13,9 @@ import com.pb.shop.model.Maker;
 import com.pb.shop.model.Product;
 import com.pb.shop.model.UserBadMessage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -55,11 +58,15 @@ public class WebPageController {
     }
 
     @ExceptionHandler(GeneralException.class)
-    @ResponseBody
-    public UserBadMessage handleIOException(GeneralException exception) {
+    public ModelAndView Page(GeneralException exception) throws GeneralException {
         UserBadMessage ue = new UserBadMessage();
+        logger.info("Inside exHan!");
         ue.setMessage(exception.getMessage());
         logger.error(ue.getMessage());
-        return ue;
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("error", ue);
+        ModelAndView model = new ModelAndView("error", map);
+      //  model.addAttribute("error", ue);
+        return model;
     }
 }

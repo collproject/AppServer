@@ -167,7 +167,17 @@
                             <p class="product_price">$ 80</p>
                             <a href="shoppingcart.html" class="addtocart"></a>
                             <a href="productdetail.html" class="detail"></a>
-                        </div>        	    	
+                        </div>  
+
+                                                <div class="product_box">
+                            <h3>Titel</h3>
+                            <a href="productdetail.html"><img src="images/product/02.jpg" alt="Shoes 2" /></a>
+                            <p>Sed congue, erat id congue vehicula. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.</p>
+                            <p class="product_price">$ 80</p>
+                            <a href="shoppingcart.html" class="addtocart"></a>
+                            <a href="productdetail.html" class="detail"></a>
+                        </div> 
+                        
                         <div class="product_box no_margin_right">
                             <h3>Nulla luctus urna</h3>
                             <a href="productdetail.html"><img src="images/product/06.jpg" alt="Shoes 6" /></a>
