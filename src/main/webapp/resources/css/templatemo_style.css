@@ -180,6 +180,12 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	font-weight: 700;
 	margin-bottom: 20px;
 }
+.product_box .product_exist {
+	color: black;
+	font-size: 10px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
 .product_box .addtocart {
 	float: left;
 	display: block;

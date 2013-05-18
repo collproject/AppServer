@@ -1,0 +1,28 @@
+/* 
+    Document   : newcss
+    Created on : May 17, 2013, 2:29:07 PM
+    Author     : Дмитрий
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#header{
+    background-color: chartreuse;
+    float: top;
+    width: 100%;
+}
+
+#menu{
+    background-color: brown;
+    float: left;
+    width: 25%;
+}
+
+#content{
+    background-color: aqua;
+    float: right;
+    width: 75%;
+}

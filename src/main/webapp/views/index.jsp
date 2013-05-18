@@ -104,7 +104,7 @@
                                 <ul class="sidebar_list">
                                     <c:if test="${not empty makers}">
                                         <c:forEach items="${makers}" var="mak">
-                                           <li><a href="#">${mak.makName}</a></li>
+                                            <li><a href="#">${mak.makName}</a></li>
                                         </c:forEach>
                                     </c:if>
                                 </ul>
@@ -143,49 +143,31 @@
                     <div id="content" class="float_r">
                         <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>                        
                         <h1>New Products</h1>
+                        <c:if test="${not empty products}">
+                            <c:forEach items="${products}" var="product">
+                                <div class="product_box">
+                                    <h3>${product.prodName}</h3>
+                                    <img src= "<c:url value="/admin/image/${product.prodImg}"/>" />
+                                    <p>${product.prodDescription}</p>
+                                    <c:if test="${product.prodExist}" >
+                                        <p class="product_exist"> Есть на складе </p> 
+                                    </c:if>
+                                    <c:if test="${not product.prodExist}" >
+                                        <p class="product_exist"> Нет на складе </p> 
+                                    </c:if>
+                                    <p class="product_price">${product.prodPrice} грн</p>                           
+                                </div>
+                            </c:forEach>
+                        </c:if>     
+                        
                         <div class="product_box">
-                            <h3>Ut eu feugiat</h3>
-                            <a href="productdetail.html"><img src="images/product/01.jpg" alt="Shoes 1" /></a>
-                            <p>Nulla rutrum neque vitae erat condimentum eget malesuada.</p>
-                            <p class="product_price">$ 100</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>        	
-                        <div class="product_box">
-                            <h3>Curabitur et turpis</h3>
+                            <h3>Titel</h3>
                             <a href="productdetail.html"><img src="images/product/02.jpg" alt="Shoes 2" /></a>
                             <p>Sed congue, erat id congue vehicula. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.</p>
                             <p class="product_price">$ 80</p>
                             <a href="shoppingcart.html" class="addtocart"></a>
                             <a href="productdetail.html" class="detail"></a>
-                        </div>        	
-                        <div class="product_box no_margin_right">
-                            <h3>Mauris consectetur</h3>
-                            <a href="productdetail.html"><img src="images/product/03.jpg" alt="Shoes 3" /></a>
-                            <p>Morbi non risus vitae est vestibulum tincidunt ac eget metus.</p>
-                            <p class="product_price">$ 60</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>   
-
-                        <div class="cleaner"></div>
-
-                        <div class="product_box">
-                            <h3>Proin volutpat</h3>
-                            <a href="productdetail.html"><img src="images/product/04.jpg" alt="Shoes 4" /></a>
-                            <p>Sed semper euismod dolor sit amet interdum. Phasellus in mi eros.</p>
-                            <p class="product_price">$ 220</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>        	
-                        <div class="product_box">
-                            <h3>Aenean tempus</h3>
-                            <a href="productdetail.html"><img src="images/product/05.jpg" alt="Shoes 5" /></a>
-                            <p>Maecenas porttitor erat quis leo pellentesque molestie.</p>
-                            <p class="product_price">$ 180</p>
-                            <a href="shoppingcart.html" class="addtocart"></a>
-                            <a href="productdetail.html" class="detail"></a>
-                        </div>        	
+                        </div>        	    	
                         <div class="product_box no_margin_right">
                             <h3>Nulla luctus urna</h3>
                             <a href="productdetail.html"><img src="images/product/06.jpg" alt="Shoes 6" /></a>
@@ -229,37 +211,37 @@
     </head>
     <body>
         <h1>Makers</h1>
-        <c:if test="${not empty makers}">
-            <table>
-                <tbody>
-                    <c:forEach items="${makers}" var="maker">
-                        <tr>
-                            <td>${maker.makName}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-        <jsp:include page="tableJSP.jsp" />
-        <h1>Products</h1>
-        <c:if test="${not empty products}">
-            <table>
-                <tbody>
-                    <c:forEach items="${products}" var="prod">
-                        <tr>
-                            <td>
-                                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
-                                     width="60" height="60">
-                            </td>
-                            <td> 
-                                ${prod.prodName}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
+<c:if test="${not empty makers}">
+    <table>
+        <tbody>
+    <c:forEach items="${makers}" var="maker">
+        <tr>
+            <td>${maker.makName}</td>
+        </tr>
+    </c:forEach>
+</tbody>
+</table>
+</c:if>
+<jsp:include page="tableJSP.jsp" />
+<h1>Products</h1>
+<c:if test="${not empty products}">
+    <table>
+        <tbody>
+    <c:forEach items="${products}" var="prod">
+        <tr>
+            <td>
+                <img src="<c:url value="/admin/image/${prod.prodImg}"/>" 
+                     width="60" height="60">
+            </td>
+            <td> 
+        ${prod.prodName}
+    </td>
+</tr>
+    </c:forEach>
+</tbody>
+</table>
+</c:if>
 
-    </body>
+</body>
 </html>
 -->
