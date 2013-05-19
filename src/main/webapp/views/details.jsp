@@ -22,6 +22,9 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="resources/css/ddsmoothmenu.css" />" />
 
         <script type="text/javascript" src="<c:url value="resources/js/jquery.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="resources/js/jquery-1-4-2.min.js"/>"></script> 
+        <link rel="stylesheet" href="<c:url value="resources/css/slimbox2.css"/>" type="text/css" media="screen" /> 
+        <script type="text/JavaScript" src="<c:url value="resources/js/slimbox2.js"/>"></script> 
         <script type="text/javascript" src="<c:url value="resources/js/ddsmoothmenu.js"/>" >
 
             /***********************************************
@@ -64,8 +67,8 @@
                                     <c:if test="${not empty makers}">
                                         <c:forEach items="${makers}" var="mak">
                                             <li><a href="<c:url value="index.html?mkId=${mak.makID}"/>">${mak.makName}</a></li>
-                                        </c:forEach>
-                                    </c:if>                                            
+                                            </c:forEach>
+                                        </c:if>                                            
                                 </ul>
                             </li>
                             <li><a href="#">О нас</a></li>
@@ -90,8 +93,8 @@
                                     <c:if test="${not empty categories}">
                                         <c:forEach items="${categories}" var="cat">
                                             <li><a href="<c:url value="index.html?catId=${cat.catID}"/>">${cat.catName}</a></li>
-                                        </c:forEach>
-                                    </c:if>
+                                            </c:forEach>
+                                        </c:if>
                                 </ul>
                             </div>
                         </div>
@@ -100,37 +103,41 @@
 
                     <div>
                         <c:if test="${not empty product}">
-                            <h1 align="center">${product.prodName}</h1><br>
-                                <img id="img_left" src= "<c:url value="/admin/image/${product.prodImg}"/>" width="250" height="250" />
-                                <p id="prod_optons">
+                            <h1 align="center">${product.prodName}</h1><br />
+                            <a rel="lightbox[portfolio]" href="<c:url value="/admin/image/${product.prodImg}"/>">
+                            <img id="img_left" src="<c:url value="/admin/image/${product.prodImg}"/>" width="250" height="200" />
+                            </a>
+                            <div id="prod_optons">
 
-                                    <dl>
-                                        <h3>Характеристики</h3>
-                                        <c:if test="${not empty categor}">
-                                            <li>Категория ${categor.catName} </li>
+
+                                <h3>Характеристики</h3>
+                                <ul>
+                                    <c:if test="${not empty categor}">
+                                        <li>Категория: ${categor.catName} </li>
                                         </c:if> 
 
-                                        <c:if test="${not empty m}">
-                                            <li>Производитель ${m.makName} </li>
+                                    <c:if test="${not empty m}">
+                                        <li>Производитель: ${m.makName} </li>
                                         </c:if> 
 
-                                        <li>Цена ${product.prodPrice} грн</li>
+                                    <li>Цена: ${product.prodPrice} грн</li>
 
-                                        <c:if test="${product.prodExist}" >
-                                            <li>Наличие: Есть на складе </li>
+                                    <c:if test="${product.prodExist}" >
+                                        <li>Наличие: Есть на складе </li>
                                         </c:if>
                                         <c:if test="${not product.prodExist}" >
-                                            <li>Наличие: Нет на складе </li>
+                                        <li>Наличие: Нет на складе </li>
                                         </c:if>
 
-                                    </dl>
+                                </ul>
 
-                                    <h3>Описание</h3>
-                                    ${product.prodDescription}
+                                <h3>Описание</h3>
+                                ${product.prodDescription}
 
-                                </p>
+
 
                             </c:if>
+                        </div>
                     </div> 
                     <div class="cleaner"></div>
                 </div> <!-- END of templatemo_main -->

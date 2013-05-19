@@ -80,7 +80,7 @@ public class WebPageController {
     }
 
     @ExceptionHandler(GeneralException.class)
-    public ModelAndView Page(GeneralException exception) throws GeneralException {
+    public ModelAndView errorPage(GeneralException exception) throws GeneralException {
         UserBadMessage ue = new UserBadMessage();
         logger.info("Inside exHandler");
         ue.setMessage(exception.getMessage());

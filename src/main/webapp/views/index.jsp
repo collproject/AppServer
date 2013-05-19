@@ -22,7 +22,9 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="resources/css/ddsmoothmenu.css" />" />
 
         <script type="text/javascript" src="<c:url value="resources/js/jquery.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="resources/js/slimbox2"/>"></script>
         <script type="text/javascript" src="<c:url value="resources/js/ddsmoothmenu.js"/>" >
+
 
             /***********************************************
              * Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -51,7 +53,7 @@
             <div id="templatemo_wrapper">
 
                 <div id="templatemo_header">
-                    <div id="site_title"><h1><a href="#">Онлайн магазин</a></h1></div>
+                    <div id="site_title"><h1><a href="#">Онлайн витрина</a></h1></div>
                     <div class="cleaner"></div>
                 </div> <!-- END of templatemo_header -->
 
@@ -108,9 +110,10 @@
 
                                 <c:if test="${count % 3 != 0}" >          
                                     <div class="product_box">
-                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3></a>
-                                        
-                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3>
+
+                                            <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        </a>
                                         <c:if test="${product.prodExist}" >
                                             <p class="product_exist"> Есть на складе </p> 
                                         </c:if>
@@ -123,9 +126,10 @@
 
                                 <c:if test="${count % 3 == 0}" >          
                                     <div class="product_box no_margin_right">
-                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3></a>
-                                       
-                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3>
+
+                                            <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                        </a>
                                         <c:if test="${product.prodExist}" >
                                             <p class="product_exist"> Есть на складе </p> 
                                         </c:if>
@@ -136,7 +140,7 @@
                                     </div>
                                     <div class="cleaner"></div>
                                 </c:if>
-                                
+
 
                             </c:forEach>
                         </c:if>     
