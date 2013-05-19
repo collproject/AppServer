@@ -17,7 +17,7 @@
     </head>
     <body>
         <div id="center">
-            <h1>   Страница не доступна</h1>
+            <h1>Страница недоступна</h1>
             <c:if test="${not empty error}">
                 <p>${error.message}</p>
             </c:if>
