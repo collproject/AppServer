@@ -75,7 +75,7 @@
                     </div> <!-- end of ddsmoothmenu -->
                     <div id="templatemo_search">
                         <form action="#" method="get">
-                            <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+                            <input type="text" value=" " name="name" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
                             <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
                         </form>
                     </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div id="content" class="float_r">
-                        <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>                        
+                        <script type="text/javascript" src="resources/js/jquery-1.4.3.min.js"></script>                        
                         <h1>Продукты</h1>
                         <c:if test="${not empty products}">
 
