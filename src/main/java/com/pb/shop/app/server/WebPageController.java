@@ -62,6 +62,22 @@ public class WebPageController {
         model.addAttribute("categories", categories);
         return "index";
     }
+    
+        @RequestMapping(value = "/details.html")
+    public String detailsPage(@RequestParam(value = "prodId",  required = true) String prodId, Model model) throws GeneralException {
+        logger.info("Details page");
+        List<Maker> makers = makerBusinessService.getAllMakers();
+        Product product = productBusinessService.getProductById(prodId);
+        Maker m = makerBusinessService.getMakerById(product.getMakID().toString());
+        List<Category> categories = categoryBusinessService.getAllCategories();
+        Category k = categoryBusinessService.getCategoryById(product.getCatID().toString());
+        model.addAttribute("makers", makers);
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
+        model.addAttribute("m", m);
+        model.addAttribute("categor", k);
+        return "details";
+    }
 
     @ExceptionHandler(GeneralException.class)
     public ModelAndView Page(GeneralException exception) throws GeneralException {

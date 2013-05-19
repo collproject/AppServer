@@ -64,8 +64,8 @@
                                     <c:if test="${not empty makers}">
                                         <c:forEach items="${makers}" var="mak">
                                             <li><a href="<c:url value="index.html?mkId=${mak.makID}"/>">${mak.makName}</a></li>
-                                            </c:forEach>
-                                        </c:if>                                            
+                                        </c:forEach>
+                                    </c:if>                                            
                                 </ul>
                             </li>
                             <li><a href="#">О нас</a></li>
@@ -75,7 +75,7 @@
                     </div> <!-- end of ddsmoothmenu -->
                     <div id="templatemo_search">
                         <form action="#" method="get">
-                            <input type="text" value=" " name="name" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+                            <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
                             <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
                         </form>
                     </div>
@@ -90,56 +90,47 @@
                                     <c:if test="${not empty categories}">
                                         <c:forEach items="${categories}" var="cat">
                                             <li><a href="<c:url value="index.html?catId=${cat.catID}"/>">${cat.catName}</a></li>
-                                            </c:forEach>
-                                        </c:if>
+                                        </c:forEach>
+                                    </c:if>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div id="content" class="float_r">
-                        <script type="text/javascript" src="resources/js/jquery-1.4.3.min.js"></script>                        
-                        <h1>Продукты</h1>
-                        <c:if test="${not empty products}">
 
-                            <c:set var="count" value="0" scope="page"/>
 
-                            <c:forEach items="${products}" var="product">
-                                <c:set var="count" value="${count + 1}"/>
+                    <div>
+                        <c:if test="${not empty product}">
+                            <h1 align="center">${product.prodName}</h1><br>
+                                <img id="img_left" src= "<c:url value="/admin/image/${product.prodImg}"/>" width="250" height="250" />
+                                <p id="prod_optons">
 
-                                <c:if test="${count % 3 != 0}" >          
-                                    <div class="product_box">
-                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3></a>
-                                        
-                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
+                                    <dl>
+                                        <h3>Характеристики</h3>
+                                        <c:if test="${not empty categor}">
+                                            <li>Категория ${categor.catName} </li>
+                                        </c:if> 
+
+                                        <c:if test="${not empty m}">
+                                            <li>Производитель ${m.makName} </li>
+                                        </c:if> 
+
+                                        <li>Цена ${product.prodPrice} грн</li>
+
                                         <c:if test="${product.prodExist}" >
-                                            <p class="product_exist"> Есть на складе </p> 
+                                            <li>Наличие: Есть на складе </li>
                                         </c:if>
                                         <c:if test="${not product.prodExist}" >
-                                            <p class="product_exist"> Нет на складе </p> 
+                                            <li>Наличие: Нет на складе </li>
                                         </c:if>
-                                        <p class="product_price">${product.prodPrice} грн</p>                           
-                                    </div>
-                                </c:if>
 
-                                <c:if test="${count % 3 == 0}" >          
-                                    <div class="product_box no_margin_right">
-                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3></a>
-                                       
-                                        <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
-                                        <c:if test="${product.prodExist}" >
-                                            <p class="product_exist"> Есть на складе </p> 
-                                        </c:if>
-                                        <c:if test="${not product.prodExist}" >
-                                            <p class="product_exist"> Нет на складе </p> 
-                                        </c:if>
-                                        <p class="product_price">${product.prodPrice} грн</p>                           
-                                    </div>
-                                    <div class="cleaner"></div>
-                                </c:if>
-                                
+                                    </dl>
 
-                            </c:forEach>
-                        </c:if>     
+                                    <h3>Описание</h3>
+                                    ${product.prodDescription}
+
+                                </p>
+
+                            </c:if>
                     </div> 
                     <div class="cleaner"></div>
                 </div> <!-- END of templatemo_main -->
