@@ -6,9 +6,12 @@ package com.pb.shop.app.server.dao.impl;
 
 import com.pb.shop.app.server.dao.service.ProductDaoService;
 import com.pb.shop.model.Product;
+import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
@@ -73,15 +76,15 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
         getJdbcTemplate().update(
                 ADD_PRODUCT,
                 new Object[]{
-                    product.getProdID(),
-                    product.getCatID(),
-                    product.getMakID(),
-                    product.getProdName(),
-                    product.getProdPrice(),
-                    product.getProdDescription(),
-                    product.getProdImg(),
-                    exist
-                });
+            product.getProdID(),
+            product.getCatID(),
+            product.getMakID(),
+            product.getProdName(),
+            product.getProdPrice(),
+            product.getProdDescription(),
+            product.getProdImg(),
+            exist
+        });
     }
 
     @Override
@@ -91,15 +94,15 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
         getJdbcTemplate().update(
                 UPDATE_PRODUCT,
                 new Object[]{
-                    product.getMakID(),
-                    product.getCatID(),
-                    product.getProdName(),
-                    product.getProdPrice(),
-                    product.getProdDescription(),
-                    product.getProdImg(),
-                    exist,
-                    product.getProdID()
-                });
+            product.getMakID(),
+            product.getCatID(),
+            product.getProdName(),
+            product.getProdPrice(),
+            product.getProdDescription(),
+            product.getProdImg(),
+            exist,
+            product.getProdID()
+        });
     }
 
     @Override
@@ -131,6 +134,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
     }
 
     private String makeQuery(String katId, String mkId, String name, String fromPrice, String toPrice) {
+
         StringBuilder query = new StringBuilder("SELECT * FROM Products p WHERE 1 = 1");
         if (katId != null) {
             query.append(" AND p.CatID = ").append(katId);
@@ -139,7 +143,7 @@ public class ProductDaoServiceImpl extends JdbcDaoSupport implements ProductDaoS
             query.append(" AND p.MakID = ").append(mkId);
         }
         if (name != null) {
-            query.append(" AND p.ProdName LIKE '%").append(name).append("%'");
+            query.append(" AND p.ProdName LIKE N'%").append(name).append("%'");
         }
         if (fromPrice != null) {
             query.append(" AND p.ProdPrice >= ").append(fromPrice);
