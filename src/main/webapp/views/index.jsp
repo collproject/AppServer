@@ -108,7 +108,8 @@
 
                                 <c:if test="${count % 3 != 0}" >          
                                     <div class="product_box">
-                                        <h3>${product.prodName}</h3>
+                               
+                                        <a href="<c:url value="details.html?prodId=${product.prodID}"/>"><h3>${product.prodName}</h3></a>
                                         <img src= "<c:url value="/admin/image/${product.prodImg}"/>" width="200" height="150" />
                                         <c:if test="${product.prodExist}" >
                                             <p class="product_exist"> Есть на складе </p> 

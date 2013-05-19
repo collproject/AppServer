@@ -308,6 +308,17 @@ a.nivo-prevNav {
 	left:15px;
 }
 
+#prod_optons{
+    float: right;
+    font-size: 12px;
+}
+
+#img_left{
+    float: left;
+    margin-right: 100px;
+    margin-left: 50px;
+}
+
 .nivo-caption {
     text-shadow:none;
     font-family: Helvetica, Arial, sans-serif;
